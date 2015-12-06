@@ -39,18 +39,39 @@ var robot = Cylon.robot({
             console.log('connected');
         }.bind(this));
 
-        // For testing purposes
-        setTimeout(function () {
-            lightShow.load();
+
+        setTimeout(function() {
+            console.log('Running', this.isRunning);
+            if(!this.isRunning) {
+
+                this.isRunning = true;
+
+                console.log('before load');
+                lightShow.load()
+                    .then(function() {
+                        console.log('Show complete');
+                        this.isRunning = false;
+                    }.bind(this));
+
+            }
         }.bind(this), 3000);
 
-        socket.on(config.bookEvent, function () {
-            relay.toggle(13, 1);
-
-            setTimeout(function () {
-                relay.toggle(13, 0);
-            }.bind(this), config.duration);
-        }.bind(this));
+        //socket.on(config.bookEvent, function () {
+        //
+        //    if(!this.isRunning) {
+        //
+        //        this.isRunning = true;
+        //
+        //        console.log('before load');
+        //        lightShow.load()
+        //        .then(function() {
+        //            console.log('Show complete');
+        //            this.isRunning = false;
+        //        }.bind(this));
+        //
+        //    }
+        //
+        //}.bind(this));
 
     }
 });
