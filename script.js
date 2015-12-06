@@ -18,9 +18,9 @@ var robot = Cylon.robot({
         this.isRunning = false;
         socket.on('connect', function () {
             console.log('connected');
-            //my.led.toggle();
         }.bind(this));
 
+        // For testing purposes
         setTimeout(function () {
             this.loadShow();
         }.bind(this), 3000);
@@ -72,9 +72,8 @@ var robot = Cylon.robot({
 
         this.init(rpi);
 
-        //every((1).second(), my.led.toggle);
     }
-})
+});
 
 // connect to the Raspberry Pi and start working 
 robot.start();
