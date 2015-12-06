@@ -1,5 +1,4 @@
 {
   "url": "https://appointments.spruce.me",
-  "bookEvent": "did-book-appointments",
-  "duration": 5000
+  "bookEvent": "did-book-appointments"
 }
