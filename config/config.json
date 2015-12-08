@@ -1,4 +1,5 @@
 {
   "url": "https://appointments.spruce.me",
-  "bookEvent": "did-book-appointments"
+  "bookEvent": "did-book-appointments",
+  "appointmentSong": "east-coast.mp3"
 }

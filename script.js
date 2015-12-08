@@ -13,6 +13,7 @@ var child;
 var robot = Cylon.robot({
     // change the port to the correct one for your Raspberry Pi
     rpi: null,
+    currentSong: null,
     connections: {
         raspi: {adaptor: 'raspi'}
     },
@@ -43,19 +44,25 @@ var robot = Cylon.robot({
             console.log('connected');
         }.bind(this));
 
-        child = exec("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py --file=/home/pi/Development/lightshowpi/east-coast.mp3", function (error, stdout, stderr) {
-            console.log('stdout: ' + stdout);
-            console.log('stderr: ' + stderr);
+        this.currentSong = exec("sudo python /home/pi/Development/lightshowpi/py/start_music_and_lights.py --playlist=/home/pi/Development/lightshowpi/.playlist", function (error, stdout, stderr) {
             if (error !== null) {
                 console.log('exec error: ' + error);
             }
-        });
+        }.bind(this));
 
         socket.on(config.bookEvent, function () {
 
             if(!this.isRunning) {
 
                 this.isRunning = true;
+                this.currentSong.kill();
+                this.currentSong = null;
+
+                this.currentSong = exec("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py --file=/home/pi/Development/lightshowpi/" + config.appointmentSong, function (error, stdout, stderr) {
+                    if (error !== null) {
+                        console.log('exec error: ' + error);
+                    }
+                }.bind(this));
 
                 lightShow.load('show2')
                 .then(function() {
