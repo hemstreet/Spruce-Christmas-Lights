@@ -51,7 +51,7 @@ var robot = Cylon.robot({
                 this.currentSong.kill();
                 this.currentSong = null;
 
-                this.currentSong = spawn("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py", ["--file", "/home/pi/Development/lightshowpi/" + config.appointmentSong]).on('error', function(err) { console.log(err); });
+                this.currentSong = spawn("sudo", ["python", "/home/pi/Development/lightshowpi/py/synchronized_lights.py", "--file", "/home/pi/Development/lightshowpi/" + config.appointmentSong]).on('error', function(err) { console.log(err); });
 
                 lightShow.load('show2')
                     .then(function() {
