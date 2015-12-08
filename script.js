@@ -6,7 +6,7 @@ var Cylon = require('cylon'),
     lightShow = require('./lib/lightShow');
 
 var sys = require('sys');
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 var child;
 
 // define the robot
@@ -44,11 +44,7 @@ var robot = Cylon.robot({
             console.log('connected');
         }.bind(this));
 
-        this.currentSong = exec("sudo python /home/pi/Development/lightshowpi/py/start_music_and_lights.py --playlist=/home/pi/Development/lightshowpi/.playlist", function (error, stdout, stderr) {
-            if (error !== null) {
-                console.log('exec error: ' + error);
-            }
-        }.bind(this));
+        this.currentSong = spawn("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py", ["--playlist", "/home/pi/Development/lightshowpi/.playlist"]).on('error', function(err) { console.log(err); });
 
         socket.on(config.bookEvent, function () {
 
@@ -58,11 +54,7 @@ var robot = Cylon.robot({
                 this.currentSong.kill();
                 this.currentSong = null;
 
-                this.currentSong = exec("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py --file=/home/pi/Development/lightshowpi/" + config.appointmentSong, function (error, stdout, stderr) {
-                    if (error !== null) {
-                        console.log('exec error: ' + error);
-                    }
-                }.bind(this));
+                this.currentSong = spawn("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py --file=/home/pi/Development/lightshowpi/" + config.appointmentSong).on('error', function(err) { console.log(err); });
 
                 lightShow.load('show2')
                 .then(function() {
