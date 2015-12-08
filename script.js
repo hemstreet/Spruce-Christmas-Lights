@@ -44,8 +44,8 @@ var robot = Cylon.robot({
         }.bind(this));
 
         child = exec("sudo python ~/Development/lightshowpi/py/synchronized_lights.py --file=03\ East\ Coast.mp3", function (error, stdout, stderr) {
-            sys.print('stdout: ' + stdout);
-            sys.print('stderr: ' + stderr);
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);
             if (error !== null) {
                 console.log('exec error: ' + error);
             }
