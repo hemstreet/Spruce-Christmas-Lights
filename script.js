@@ -5,6 +5,10 @@ var Cylon = require('cylon'),
     relay = require('./lib/relay'),
     lightShow = require('./lib/lightShow');
 
+var sys = require('sys');
+var exec = require('child_process').exec;
+var child;
+
 // define the robot
 var robot = Cylon.robot({
     // change the port to the correct one for your Raspberry Pi
@@ -39,13 +43,21 @@ var robot = Cylon.robot({
             console.log('connected');
         }.bind(this));
 
+        child = exec("sudo python ~/Development/lightshowpi/py/synchronized_lights.py --file=03\ East\ Coast.mp3", function (error, stdout, stderr) {
+            sys.print('stdout: ' + stdout);
+            sys.print('stderr: ' + stderr);
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            }
+        });
+
         socket.on(config.bookEvent, function () {
 
             if(!this.isRunning) {
 
                 this.isRunning = true;
 
-                lightShow.load()
+                lightShow.load('show2')
                 .then(function() {
                     this.isRunning = false;
                 }.bind(this));
