@@ -43,7 +43,7 @@ var robot = Cylon.robot({
             console.log('connected');
         }.bind(this));
 
-        child = exec("sudo python ~/Development/lightshowpi/py/synchronized_lights.py --file=03\ East\ Coast.mp3", function (error, stdout, stderr) {
+        child = exec("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py --file=/home/pi/Development/lightshowpi/east-coast.mp3", function (error, stdout, stderr) {
             console.log('stdout: ' + stdout);
             console.log('stderr: ' + stderr);
             if (error !== null) {
