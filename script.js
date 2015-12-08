@@ -3,11 +3,8 @@ var Cylon = require('cylon'),
     socket = require('socket.io-client')(config.url),
     _ = require('underscore'),
     relay = require('./lib/relay'),
-    lightShow = require('./lib/lightShow');
-
-var sys = require('sys');
-var spawn = require('child_process').spawn;
-var child;
+    lightShow = require('./lib/lightShow'),
+    spawn = require('child_process').spawn;
 
 // define the robot
 var robot = Cylon.robot({
@@ -54,7 +51,7 @@ var robot = Cylon.robot({
                 this.currentSong.kill();
                 this.currentSong = null;
 
-                this.currentSong = spawn("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py --file=/home/pi/Development/lightshowpi/" + config.appointmentSong).on('error', function(err) { console.log(err); });
+                this.currentSong = spawn("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py", ["--file", "/home/pi/Development/lightshowpi/" + config.appointmentSong]).on('error', function(err) { console.log(err); });
 
                 lightShow.load('show2')
                 .then(function() {
