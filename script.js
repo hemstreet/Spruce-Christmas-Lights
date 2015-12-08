@@ -41,7 +41,7 @@ var robot = Cylon.robot({
             console.log('connected');
         }.bind(this));
 
-        this.currentSong = spawn("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py", ["--playlist", "/home/pi/Development/lightshowpi/.playlist"]).on('error', function(err) { console.log(err); });
+        this.currentSong = spawn("sudo", ["python", "/home/pi/Development/lightshowpi/py/synchronized_lights.py", "--playlist", "/home/pi/Development/lightshowpi/.playlist"]).on('error', function(err) { console.log(err); });
 
         socket.on(config.bookEvent, function () {
 
@@ -54,9 +54,9 @@ var robot = Cylon.robot({
                 this.currentSong = spawn("sudo python /home/pi/Development/lightshowpi/py/synchronized_lights.py", ["--file", "/home/pi/Development/lightshowpi/" + config.appointmentSong]).on('error', function(err) { console.log(err); });
 
                 lightShow.load('show2')
-                .then(function() {
-                    this.isRunning = false;
-                }.bind(this));
+                    .then(function() {
+                        this.isRunning = false;
+                    }.bind(this));
             }
 
         }.bind(this));
