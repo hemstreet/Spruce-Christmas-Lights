@@ -43,6 +43,10 @@ var robot = Cylon.robot({
 
         this.currentSong = spawn("sudo", ["python", "/home/pi/Development/lightshowpi/py/synchronized_lights.py", "--playlist", "/home/pi/Development/lightshowpi/.playlist"]).on('error', function(err) { console.log(err); });
 
+        this.currentSong.on('close', function() {
+            console.log('it\'s closed');
+        });
+
         socket.on(config.bookEvent, function () {
 
             if(!this.isRunning) {
@@ -51,7 +55,9 @@ var robot = Cylon.robot({
                 this.currentSong.kill();
                 this.currentSong = null;
 
-                this.currentSong = spawn("sudo", ["python", "/home/pi/Development/lightshowpi/py/synchronized_lights.py", "--file", "/home/pi/Development/lightshowpi/" + config.appointmentSong]).on('error', function(err) { console.log(err); });
+                this.currentSong = spawn("sudo", ["python", "/home/pi/Development/lightshowpi/py/synchronized_lights.py", "--file", "/home/pi/Development/lightshowpi/" + config.appointmentSong]).on('error', function(err) { console.log(err); }).on('close', function() {
+                    this.currentSong = spawn("sudo", ["python", "/home/pi/Development/lightshowpi/py/synchronized_lights.py", "--playlist", "/home/pi/Development/lightshowpi/.playlist"]).on('error', function(err) { console.log(err); });
+                }.bind(this));
 
                 lightShow.load('show2')
                     .then(function() {
