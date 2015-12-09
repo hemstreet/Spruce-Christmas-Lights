@@ -12,6 +12,7 @@ var robot = Cylon.robot({
     // change the port to the correct one for your Raspberry Pi
     rpi: null,
     currentSong: null,
+    ignoreNextClose: false,
     connections: {
         raspi: {adaptor: 'raspi'}
     },
@@ -48,10 +49,12 @@ var robot = Cylon.robot({
             if(!this.isRunning) {
 
                 this.isRunning = true;
+                this.ignoreNextClose = true;
                 musicController.booked();
 
                 setTimeout(function() {
                     this.isRunning = false;
+                    this.ignoreNextClose = true;
                     this.playNext();
                 }.bind(this), 1000 * 30);
 
@@ -66,8 +69,12 @@ var robot = Cylon.robot({
     },
     playNext: function() {
         musicController.play(musicController.next()).on('close', function() {
-            console.log('closed playNext');
-            this.playNext()
+            if(!this.ignoreNextClose) {
+                console.log('closed playNext');
+                this.playNext()
+            }
+
+            this.ignoreNextClose = false;
         }.bind(this));
     }
 });
