@@ -43,7 +43,9 @@ var robot = Cylon.robot({
             console.log('connected');
         }.bind(this));
 
-        this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--file", config.basePath + "/" + config.songs[randomIndex] + '.mp3']).on('error', function(err) { console.log(err); });
+console.log("sudo python " + config.basePath + "/py/synchronized_lights.py " + "--file" + config.basePath + "/mp3/" + config.songs[randomIndex] + '.mp3');
+
+        this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--file", config.basePath + "/mp3/" + config.songs[randomIndex] + '.mp3']).on('error', function(err) { console.log(err); });
 
         this.currentSong.on('close', function() {
             console.log('it\'s closed');
