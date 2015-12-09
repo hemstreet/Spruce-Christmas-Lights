@@ -1,5 +1,26 @@
 {
   "url": "https://appointments.spruce.me",
   "bookEvent": "did-book-appointments",
-  "appointmentSong": "east-coast.mp3"
+  "appointmentSong": "east-coast.mp3",
+  "basePath": "/home/pi/Development/lightshowpi",
+  "songs": [
+    "balkan-express",
+    "carol-of-bells",
+    "certified-air-raid-material",
+    "de-l-alouette",
+    "east-coast",
+    "eye-of-the-tiger",
+    "for-the-love-of-money",
+    "get-rythme",
+    "happy-soul",
+    "hyped-up-plus-tax",
+    "list-of-demands",
+    "local-hero",
+    "lonely-day",
+    "mike-aaron-and-eddie",
+    "shake-that-bush-again",
+    "so-much-for-love",
+    "wolfman-jack",
+    "youre-fit-but-you-know-it"
+  ]
 }
