@@ -4,7 +4,8 @@ var Cylon = require('cylon'),
     _ = require('underscore'),
     relay = require('./lib/relay'),
     lightShow = require('./lib/lightShow'),
-    spawn = require('child_process').spawn;
+    MusicController = require('./lib/musicController'),
+    musicController = new MusicController(config, Math.round(Math.random() * (config.songs.length - 1)));
 
 // define the robot
 var robot = Cylon.robot({
@@ -37,19 +38,11 @@ var robot = Cylon.robot({
         this.rpi = options.rpi;
         this.isRunning = false;
 
-        var randomIndex = Math.round(Math.random() * (config.songs.length - 1));
-
         socket.on('connect', function () {
             console.log('connected');
         }.bind(this));
 
-console.log("sudo python " + config.basePath + "/py/synchronized_lights.py " + "--file" + config.basePath + "/mp3/" + config.songs[randomIndex] + '.mp3');
-
-        this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--file", config.basePath + "/mp3/" + config.songs[randomIndex] + '.mp3']).on('error', function(err) { console.log(err); });
-
-        this.currentSong.on('close', function() {
-            console.log('it\'s closed');
-        });
+        this.currentSong = musicController.play();
 
         socket.on(config.bookEvent, function () {
 
@@ -57,20 +50,23 @@ console.log("sudo python " + config.basePath + "/py/synchronized_lights.py " + "
 
                 this.isRunning = true;
                 this.currentSong.kill();
-                this.currentSong = null;
+                this.currentSong = musicController.booked();
 
-                this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--file", config.basePath + "/" + config.appointmentSong]).on('error', function(err) { console.log(err); }).on('close', function() {
-                    this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--file", config.basePath + "/" + config.songs[randomIndex] + '.mp3']).on('error', function(err) { console.log(err); });
-                }.bind(this));
+                setTimeout(function() {
+                    this.isRunning = false;
+                    this.currentSong.kill();
+                    this.playNext();
+                }.bind(this), 1000 * 30);
 
-                lightShow.load('show2')
-                    .then(function() {
-                        this.isRunning = false;
-                    }.bind(this));
             }
 
         }.bind(this));
 
+    },
+    playNext: function() {
+        this.currentSong = musicController.play(musicController.next()).on('close', function() {
+            this.playNext()
+        }.bind(this));
     }
 });
 
