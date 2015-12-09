@@ -42,7 +42,7 @@ var robot = Cylon.robot({
             console.log('connected');
         }.bind(this));
 
-        this.currentSong = musicController.play();
+        this.currentSong = this.playNext();
 
         socket.on(config.bookEvent, function () {
 
@@ -65,6 +65,7 @@ var robot = Cylon.robot({
     },
     playNext: function() {
         this.currentSong = musicController.play(musicController.next()).on('close', function() {
+            console.log('closed playNext');
             this.playNext()
         }.bind(this));
     }
