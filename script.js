@@ -39,14 +39,11 @@ var robot = Cylon.robot({
 
         var randomIndex = Math.round(Math.random() * (config.songs.length - 1));
 
-        console.log(config.songs.length);
-        console.log('index', randomIndex);
-
         socket.on('connect', function () {
             console.log('connected');
         }.bind(this));
 
-        this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--playlist", config.basePath + "/mp3/.playlist"]).on('error', function(err) { console.log(err); });
+        this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--file", config.basePath + "/" + config.songs[randomIndex] + '.mp3']).on('error', function(err) { console.log(err); });
 
         this.currentSong.on('close', function() {
             console.log('it\'s closed');
@@ -61,7 +58,7 @@ var robot = Cylon.robot({
                 this.currentSong = null;
 
                 this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--file", config.basePath + "/" + config.appointmentSong]).on('error', function(err) { console.log(err); }).on('close', function() {
-                    this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--playlist", config.basePath + "/.playlist"]).on('error', function(err) { console.log(err); });
+                    this.currentSong = spawn("sudo", ["python", config.basePath + "/py/synchronized_lights.py", "--file", config.basePath + "/" + config.songs[randomIndex] + '.mp3']).on('error', function(err) { console.log(err); });
                 }.bind(this));
 
                 lightShow.load('show2')
