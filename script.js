@@ -37,7 +37,7 @@ var robot = Cylon.robot({
         this.rpi = options.rpi;
         this.isRunning = false;
 
-        var randomIndex = Math.round(Math.rand() * (config.songs.length - 1));
+        var randomIndex = Math.round(Math.random() * (config.songs.length - 1));
 
         console.log(config.songs.length);
         console.log('index', randomIndex);
