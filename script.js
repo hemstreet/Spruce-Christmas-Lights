@@ -5,8 +5,7 @@ var Cylon = require('cylon'),
     relay = require('./lib/relay'),
     lightShow = require('./lib/lightShow'),
     MusicController = require('./lib/musicController'),
-    //musicController = new MusicController(config, Math.round(Math.random() * (config.songs.length - 1)));
-    musicController = new MusicController(config, config.songs.length - 1);
+    musicController = new MusicController(config, Math.round(Math.random() * (config.songs.length - 1)));
 
 // define the robot
 var robot = Cylon.robot({
