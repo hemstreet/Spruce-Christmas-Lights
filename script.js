@@ -40,9 +40,8 @@ var robot = Cylon.robot({
 
         socket.on('connect', function () {
             console.log('connected');
+            this.playNext();
         }.bind(this));
-
-        this.playNext();
 
         socket.on(config.bookEvent, function () {
 
@@ -59,6 +58,10 @@ var robot = Cylon.robot({
             }
 
         }.bind(this));
+
+        socket.on('disconnect', function() {
+            musicController.stop();
+        });
 
     },
     playNext: function() {
