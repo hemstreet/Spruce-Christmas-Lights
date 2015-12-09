@@ -1,7 +1,7 @@
 {
   "url": "https://appointments.spruce.me",
   "bookEvent": "did-book-appointments",
-  "appointmentSong": "east-coast",
+  "appointmentSong": "eye-of-the-tiger",
   "basePath": "/home/pi/Development/lightshowpi",
   "songs": [
     "balkan-express",
