@@ -68,14 +68,18 @@ var robot = Cylon.robot({
 
     },
     playNext: function() {
+        console.log('start of play next');
         musicController.play(musicController.next()).on('close', function() {
             if(!this.ignoreNextClose) {
+                console.log('ignored');
                 console.log('closed playNext');
-                this.playNext()
+                this.playNext();
             }
-
+            console.log('ignored set to false');
             this.ignoreNextClose = false;
         }.bind(this));
+
+        console.log('end of play next');
     }
 });
 
