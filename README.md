@@ -7,7 +7,7 @@ Storefront christmas lights controlled by raspberry pi.
 
 3rd Party code
 ===
-*Light show Pi [http://lightshowpi.org//]http://lightshowpi.org/)
+*Light show Pi [http://lightshowpi.org/](http://lightshowpi.org/)
 
 Live stream
 ===
