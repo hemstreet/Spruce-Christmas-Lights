@@ -7,9 +7,8 @@ Storefront christmas lights controlled by raspberry pi.
 
 3rd Party code
 ===
-*Light show Pi [http://lightshowpi.org/](http://lightshowpi.org/)
+*[Light show Pi](http://lightshowpi.org/)
 
 Live stream
 ===
-The entired build was recorded and streamed
-*[https://www.livecoding.tv/video/retail-barbershop-iot-x-mas-light-display/](https://www.livecoding.tv/video/retail-barbershop-iot-x-mas-light-display/)
+*[The entire build was recorded here](https://www.livecoding.tv/video/retail-barbershop-iot-x-mas-light-display/)
